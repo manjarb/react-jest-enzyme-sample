@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import User from './user'
 import fetchMock from 'fetch-mock'
+import * as api from './api'
 
 const nextTick = async () => {
   return new Promise(resolve => {
@@ -15,27 +16,31 @@ const dummyUser = {
   website: 'https://javascriptplayground.com',
 }
 
-const url = 'https://jsonplaceholder.typicode.com/users/1'
+// const url = 'https://jsonplaceholder.typicode.com/users/1'
 
-const mockUrlWithUser = user =>
-  fetchMock.getOnce(url, {
-    status: 200,
-    body: user,
-  })
+// const mockUrlWithUser = user =>
+//   fetchMock.getOnce(url, {
+//     status: 200,
+//     body: user,
+//   })
+
+const mockFetchUserResponse = user =>
+  jest.spyOn(api, 'fetchUser').mockImplementation(() => Promise.resolve(user))
 
 describe('User', () => {
+  beforeEach(() => jest.restoreAllMocks())
   afterEach(fetchMock.restore)
 
   it('it shows the loading text before the data is fetched', async () => {
-    mockUrlWithUser(dummyUser)
-
+    // mockUrlWithUser(dummyUser)
+    mockFetchUserResponse(dummyUser)
     const wrapper = shallow(<User id={1} />)
     expect(wrapper.find('p').text()).toEqual('Loading!')
   })
 
   it('shows the data once it has been fetched', async () => {
-    mockUrlWithUser(dummyUser)
-
+    // mockUrlWithUser(dummyUser)
+    mockFetchUserResponse(dummyUser)
     const wrapper = shallow(<User id={1} />)
 
     await nextTick()

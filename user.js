@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
+import { fetchUser } from './api'
 
-const urlForUser = id => `https://jsonplaceholder.typicode.com/users/${id}`
-
-const fetchUser = id => fetch(urlForUser(id)).then(data => data.json())
+// const urlForUser = id => `https://jsonplaceholder.typicode.com/users/${id}`
+// const fetchUser = id => fetch(urlForUser(id)).then(data => data.json())
 
 class User extends Component {
   state = {
