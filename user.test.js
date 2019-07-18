@@ -16,6 +16,12 @@ const dummyUser = {
   website: 'https://javascriptplayground.com',
 }
 
+const anotherDummyUser = {
+  id: 2,
+  name: 'Alice Bob',
+  website: 'https://bbc.com',
+}
+
 // const url = 'https://jsonplaceholder.typicode.com/users/1'
 
 // const mockUrlWithUser = user =>
@@ -26,6 +32,16 @@ const dummyUser = {
 
 const mockFetchUserResponse = user =>
   jest.spyOn(api, 'fetchUser').mockImplementation(() => Promise.resolve(user))
+
+const mockFetchUserResponseOnce = () =>
+  jest
+    .spyOn(api, 'fetchUser')
+    .mockImplementationOnce(() => {
+      return Promise.resolve(dummyUser)
+    })
+    .mockImplementationOnce(() => {
+      return Promise.resolve(anotherDummyUser)
+    })
 
 describe('User', () => {
   beforeEach(() => jest.restoreAllMocks())
@@ -48,5 +64,20 @@ describe('User', () => {
 
     expect(wrapper.find('h4').text()).toEqual(dummyUser.name)
     expect(wrapper.find('p').text()).toContain(dummyUser.website)
+  })
+
+  it('makes a new HTTP request when the ID prop changes', async () => {
+    mockFetchUserResponseOnce()
+
+    const wrapper = shallow(<User id={1} />)
+    expect(api.fetchUser).toHaveBeenCalledWith(1)
+    wrapper.setProps({ id: 2 })
+    expect(api.fetchUser).toHaveBeenCalledWith(2)
+
+    await nextTick()
+    wrapper.update()
+
+    expect(wrapper.find('h4').text()).toEqual(anotherDummyUser.name)
+    expect(wrapper.find('p').text()).toContain(anotherDummyUser.website)
   })
 })

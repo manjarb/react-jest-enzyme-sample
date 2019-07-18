@@ -13,6 +13,12 @@ class User extends Component {
     fetchUser(this.props.id).then(user => this.setState({ user }))
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      fetchUser(this.props.id).then(user => this.setState({ user }))
+    }
+  }
+
   render() {
     return this.state.user === null ? (
       <p>Loading!</p>
