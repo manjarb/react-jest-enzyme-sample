@@ -16,15 +16,18 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "core-js": "^3.1.4",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "fetch-mock": "^7.3.7",
-    "jest": "^21.2.1",
+    "jest": "^24.8.0",
     "prettier": "^1.9.2",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "regenerator-runtime": "^0.13.3"
   }
 }
